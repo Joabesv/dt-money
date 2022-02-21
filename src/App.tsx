@@ -11,20 +11,18 @@ export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
     useState(false);
 
-  const handleOpenNewTransactionModal = () =>
-    setIsNewTransactionModalOpen(true);
-
-  const handleCloseNewTransactionModal = () =>
-    setIsNewTransactionModalOpen(false);
+  const toggleNewTransactionModal = () => {
+    setIsNewTransactionModalOpen(!isNewTransactionModalOpen);
+  };
 
   return (
     <>
-      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
+      <Header onOpenNewTransactionModal={toggleNewTransactionModal} />
       <Dashboard />
 
       <NewTransactionModal
         isOpen={isNewTransactionModalOpen}
-        onRequestClose={handleCloseNewTransactionModal}
+        onRequestClose={toggleNewTransactionModal}
       />
 
       <GlobalStyle />
