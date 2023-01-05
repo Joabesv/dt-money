@@ -4,7 +4,7 @@
     "es2021": true
   },
   "extends": [
-    "eslint:recommend",
+    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:jsx-a11y/recommended",
@@ -29,5 +29,9 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["react"],
-  "rules": {}
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/triple-slash-reference": "off"
+  }
 }

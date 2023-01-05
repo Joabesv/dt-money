@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "vite",
     "start:server": "json-server server.json -w -d 500",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{tsx,ts}\"",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
