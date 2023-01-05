@@ -1,9 +1,32 @@
+import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Summary';
 import { SearchForm } from './Components/SearchForm/';
 import { TransactionsContainer, TransactionsTable, PriceHighlight } from './styles';
 
+interface Transaction {
+  id: number;
+  description: string;
+  type: 'income' | 'outcome';
+  price: number;
+  category: string;
+  createdAt: string;
+}
+
 export function Transactions() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  async function loadTransactions() {
+    const url = import.meta.env.VITE_SERVER_URL;
+    const response = await fetch(`${url}/transactions`);
+    const data = await response.json();
+    setTransactions(data);
+  }
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
+
   return (
     <>
       <Header />
@@ -13,22 +36,18 @@ export function Transactions() {
         <SearchForm />
         <TransactionsTable>
           <tbody>
-            <tr>
-              <td width="50%">Web Freelancing</td>
-              <td>
-                <PriceHighlight variant="income">R$ 12.000,00</PriceHighlight>
-              </td>
-              <td>Venda</td>
-              <td>13/04/2022</td>
-            </tr>
-            <tr>
-              <td width="50%">Rent</td>
-              <td>
-                <PriceHighlight variant="outcome">- R$ 1.400,00</PriceHighlight>
-              </td>
-              <td>Monthly</td>
-              <td>10/04/2022</td>
-            </tr>
+            {transactions.map(({ id, category, type, price, description, createdAt }) => {
+              return (
+                <tr key={id}>
+                  <td width="50%">{category}</td>
+                  <td>
+                    <PriceHighlight variant={type}>{price}</PriceHighlight>
+                  </td>
+                  <td>{description}</td>
+                  <td>{createdAt}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </TransactionsTable>
       </TransactionsContainer>
